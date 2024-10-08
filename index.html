@@ -6,34 +6,13 @@
     <title>Sign In</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap"
-      rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- tailwindcss configuration -->
-    <script>
-      tailwind.config = {
-        theme: {
-          fontFamily: {
-            karla: ["Karla", "sans-serif"],
-          },
-          extend: {
-            colors: {
-              clifford: "#da373d",
-              lightblue: "rgb(173, 216, 230)",
-              skyblue: "rgb(135, 206, 235)",
-              powderblue: "rgb(176, 224, 230)",
-              steelblue: "rgb(70, 130, 180)",
-              cornflowerblue: "rgb(100, 149, 237)",
-              white: "rgb(255, 255, 255)",
-            },
-          },
-        },
-      };
-    </script>
+    <script src="tailwindConfig.js"></script>
   </head>
-  <body class="flex items-center justify-center min-h-screen bg-skyblue">
+  <body class="flex items-center justify-center min-h-screen bg-skyblue font-montserrat">
     <div
       class="w-full max-w-md p-8 space-y-8 bg-powderblue rounded-lg shadow-lg">
       <div>
@@ -44,7 +23,7 @@
 
       <form
         method="post"
-        action="form_validation.php"
+        action="dashboard.html"
         class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
         <div>
           <label for="email" class="sr-only">Email address</label>

@@ -7,31 +7,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Karla:ital,wght@0,200..800;1,200..800&display=swap"
-      rel="stylesheet" />
-    <!-- Tailwind CSS CDN -->
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        theme: {
-          fontFamily: {
-            karla: ["Karla", "sans-serif"],
-          },
-          extend: {
-            colors: {
-              lightblue: "rgb(173, 216, 230)",
-              skyblue: "rgb(135, 206, 235)",
-              powderblue: "rgb(176, 224, 230)",
-              steelblue: "rgb(70, 130, 180)",
-              cornflowerblue: "rgb(100, 149, 237)",
-              white: "rgb(255, 255, 255)",
-            },
-          },
-        },
-      };
-    </script>
+    <script src="tailwindConfig.js"></script>
   </head>
-  <body class="min-h-screen bg-skyblue font-karla">
+  <body class="min-h-screen bg-skyblue font-montserrat">
     <div class="flex flex-col md:flex-row">
       <!-- Sidebar -->
       <div class="bg-steelblue w-full md:w-1/4 p-8 text-white min-h-screen">
@@ -66,37 +47,34 @@
       </div>
 
       <!-- Main Content -->
-      <div class="flex-1 p-8 bg-powderblue">
+      <div class="flex-1 px-5 py-8 bg-powderblue">
         <h2 class="text-2xl font-bold text-gray-900">
-          Welcome to the Library Dashboard
+          Good Afternoon Christianah
         </h2>
-        <p class="mt-4 text-gray-700">
+        <span class=" text-gray-700">
           Use the navigation menu to view available books, manage your borrowed
           books, and update your account settings.
-        </p>
+        </span>
 
         <!-- Book Categories Section -->
         <div class="mt-8">
-          <h3 class="text-xl font-semibold text-gray-900">Book Categories</h3>
-          <div class="flex flex-wrap gap-4 mt-4">
-            <!-- Category Buttons (Placeholder) -->
-            <button
-              class="px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue">
-              Fiction
-            </button>
-            <button
-              class="px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue">
-              Non-fiction
-            </button>
-            <button
-              class="px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue">
-              Science
-            </button>
-            <button
-              class="px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue">
-              History
-            </button>
-            <!-- Additional categories can be dynamically generated using PHP -->
+          <div class="grid grid-cols-4 gap-x-4">
+            <div class="bg-purple-600 rounded-lg p-4 text-white">
+              <p class="text-lg">No of Books</p>
+              <p class="text-5xl font-semibold pt-6 ">23</p>
+            </div>
+            <div class="bg-blue-600 rounded-lg p-4 text-white">
+              <p class="text-lg">No of Students</p>
+              <p class="text-5xl font-semibold pt-6 ">2</p>
+            </div>
+            <div class="bg-red-600 rounded-lg p-4 text-white">
+              <p class="text-lg">No of Books</p>
+              <p class="text-5xl font-semibold pt-6 ">12</p>
+            </div>
+            <div class="bg-cyan-600 rounded-lg p-4 text-white">
+              <p class="text-lg">No of Books Borrowed</p>
+              <p class="text-5xl font-semibold pt-6 ">2</p>
+            </div>
           </div>
         </div>
 
