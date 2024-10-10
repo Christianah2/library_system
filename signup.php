@@ -1,23 +1,23 @@
 <?php
-if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
-  $user_firstname = $_POST[ 'firstname' ];
-  $user_lastname = $_POST[ 'lastname' ];
-  $user_email_address = $_POST[ 'email_address' ];
-  $user_phone_number = $_POST[ 'phone_number' ];
-  $user_address = $_POST[ 'address' ];
-  $user_date_of_birth = $_POST[ 'date_of_birth' ];
-  include 'connection.php';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $user_firstname = $_POST['firstname'];
+    $user_lastname = $_POST['lastname'];
+    $user_email_address = $_POST['email_address'];
+    $user_phone_number = $_POST['phone_number'];
+    $user_password = $_POST['password'];
+    include 'connection.php';
 
-  //Write the query to submit our data to the database
-  $sqlQuery = "INSERT INTO student(firstname,lastname,email_address,phone_number,address,date_of_birth)
-               VALUES('$user_firstname','$user_lastname' ,'$user_email_address', '$user_phone_number','$user_address','$user_date_of_birth')";
-  $messageSubmission = mysqli_query( $conn, $sqlQuery );
-  if ( $messageSubmission === TRUE ) {
-      echo "<script>alert('Message submitted successfully')</script>";
-  } else {
-      echo "<script>alert('Message failed to submit')</script>";
-  }
-  echo "<script>window.location.href='signup.php'</script>";
+    //Write the query to submit our data to the database
+    $sqlQuery = "INSERT INTO admin(firstname,lastname,email_address,phone_number,password)
+               VALUES('$user_firstname','$user_lastname' ,'$user_email_address', '$user_phone_number',
+               '$user_password')";
+    $messageSubmission = mysqli_query($conn, $sqlQuery);
+    if ($messageSubmission === TRUE) {
+        echo "<script>alert('Form submitted successfully')</script>";
+    } else {
+        echo "<script>alert('Form failed to submit')</script>";
+    }
+    echo "<script>window.location.href='signup.php'</script>";
 }
 ?>
 <!DOCTYPE html>
@@ -45,7 +45,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             </h2>
         </div>
 
-        <form method="post" action="form_validation.php" class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
+        <form method="post" class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
             <div>
                 <label for="firstname" class="sr-only">First Name</label>
                 <input id="firstname" name="firstname" type="text" required
