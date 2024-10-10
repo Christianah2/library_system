@@ -5,12 +5,16 @@
             class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
             Home
         </a>
-        <a href="#" class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
+        <a href="books.php" class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
             View Books
         </a>
         <a href="book-categories.php"
             class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
             Books Category
+        </a>
+        <a href="book-types.php"
+            class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
+            Book Type
         </a>
         <a href="#" class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
             Borrowed Books
