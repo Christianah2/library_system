@@ -23,7 +23,7 @@
 
       <form
         method="post"
-        action="dashboard.html"
+        action="dashboard.php"
         class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
         <div>
           <label for="email" class="sr-only">Email address</label>
@@ -79,7 +79,7 @@
         <p class="text-sm text-gray-600">
           Don't have an account?
           <a
-            href="signup.html"
+            href="signup.php"
             class="font-medium text-steelblue hover:text-indigo-900"
             >Sign up</a
           >
