@@ -1,24 +1,44 @@
 <?php
+//Check if their is an admin account;
+include 'connection.php';
+$check_admin_query = "SELECT * FROM admin";
+$verify_admin_exist = mysqli_query($conn, $check_admin_query);
+if (mysqli_num_rows($verify_admin_exist) > 0) {
+    echo "<script>alert('Admin account already exist, Kindly Sign In')</script>";
+    echo "<script>window.location.href='index.php'</script>";
+}
+
+//Create Admin Account
 if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
-  $user_firstname = $_POST[ 'firstname' ];
-  $user_lastname = $_POST[ 'lastname' ];
-  $user_email_address = $_POST[ 'email_address' ];
-  $user_phone_number = $_POST[ 'phone_number' ];
-  $user_address = $_POST[ 'address' ];
-  $user_date_of_birth = $_POST[ 'date_of_birth' ];
-  include 'connection.php';
+  $admin_first_name = $_POST[ 'first_name' ];
+  $admin_last_name = $_POST[ 'last_name' ];
+  $admin_email_address = $_POST[ 'email_address' ];
+  $admin_phone_number = $_POST[ 'phone_number' ];
+  $admin_password = $_POST[ 'password' ];
+  $admin_confirm_password = $_POST[ 'confirm_password' ];
+
+  if($admin_password != $admin_confirm_password){
+    echo "<script>alert('Passwords do not match')</script>";
+    echo "<script>window.location.href='signup.php'</script>";
+  }
+  
+  $encrypted_password = md5($admin_password);
 
   //Write the query to submit our data to the database
-  $sqlQuery = "INSERT INTO student(firstname,lastname,email_address,phone_number,address,date_of_birth)
-               VALUES('$user_firstname','$user_lastname' ,'$user_email_address', '$user_phone_number','$user_address','$user_date_of_birth')";
-  $messageSubmission = mysqli_query( $conn, $sqlQuery );
-  if ( $messageSubmission === TRUE ) {
-      echo "<script>alert('Message submitted successfully')</script>";
+  $sql_query = "INSERT INTO admin(firstname,lastname,email_address,phone_number,password,status)
+               VALUES('$admin_first_name','$admin_last_name' ,'$admin_email_address', '$admin_phone_number','$encrypted_password','0')";
+               
+  // Execute the query
+  $insert_submission = mysqli_query( $conn, $sql_query );
+  if ( $insert_submission === TRUE ) {
+      echo "<script>alert('Admin account created successfully')</script>";
+      echo "<script>window.location.href='index.php'</script>";
   } else {
-      echo "<script>alert('Message failed to submit')</script>";
+      echo "<script>alert('Admin account failed to create')</script>";
+      echo "<script>window.location.href='signup.php'</script>";
   }
-  echo "<script>window.location.href='signup.php'</script>";
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -45,16 +65,16 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             </h2>
         </div>
 
-        <form method="post" action="form_validation.php" class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
+        <form method="post" action="" class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
             <div>
                 <label for="firstname" class="sr-only">First Name</label>
-                <input id="firstname" name="firstname" type="text" required
+                <input id="firstname" name="first_name" type="text" required
                     class="bg-powderblue rounded-none relative block w-full px-3 py-2 border border-gray-400 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-white focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="First Name" />
             </div>
             <div>
                 <label for="lastname" class="sr-only">Last Name</label>
-                <input id="lastname" name="lastname" type="text" required
+                <input id="lastname" name="last_name" type="text" required
                     class="bg-powderblue rounded-none relative block w-full px-3 py-2 border border-gray-400 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-white focus:border-indigo-500 focus:z-10 sm:text-sm"
                     placeholder="Last Name" />
             </div>
