@@ -22,7 +22,7 @@
         <!-- Main Content -->
         <div class="flex-1 px-5 py-8 bg-powderblue">
             <h2 class="text-2xl font-bold text-gray-900">
-                Good Afternoon Christianah
+                Good Afternoon <?php echo $_SESSION['admin_firstname']?>
             </h2>
             <span class=" text-gray-700">
                 Use the navigation menu to view available books, manage your borrowed
