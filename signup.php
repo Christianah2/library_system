@@ -30,6 +30,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
                
   // Execute the query
   $insert_submission = mysqli_query( $conn, $sql_query );
+
   if ( $insert_submission === TRUE ) {
       echo "<script>alert('Admin account created successfully')</script>";
       echo "<script>window.location.href='index.php'</script>";
