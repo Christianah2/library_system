@@ -1,26 +1,5 @@
 <?php
-<<<<<<< HEAD
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $user_firstname = $_POST['firstname'];
-    $user_lastname = $_POST['lastname'];
-    $user_email_address = $_POST['email_address'];
-    $user_phone_number = $_POST['phone_number'];
-    $user_password = $_POST['password'];
-    include 'connection.php';
-
-    //Write the query to submit our data to the database
-    $sqlQuery = "INSERT INTO admin(firstname,lastname,email_address,phone_number,password)
-               VALUES('$user_firstname','$user_lastname' ,'$user_email_address', '$user_phone_number',
-               '$user_password')";
-    $messageSubmission = mysqli_query($conn, $sqlQuery);
-    if ($messageSubmission === TRUE) {
-        echo "<script>alert('Form submitted successfully')</script>";
-    } else {
-        echo "<script>alert('Form failed to submit')</script>";
-    }
-    echo "<script>window.location.href='signup.php'</script>";
-=======
-//Check if their is an admin account;
+// Check if their is an admin account;
 include 'connection.php';
 $check_admin_query = "SELECT * FROM admin";
 $verify_admin_exist = mysqli_query($conn, $check_admin_query);
@@ -30,36 +9,35 @@ if (mysqli_num_rows($verify_admin_exist) > 0) {
 }
 
 //Create Admin Account
-if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
-  $admin_first_name = $_POST[ 'first_name' ];
-  $admin_last_name = $_POST[ 'last_name' ];
-  $admin_email_address = $_POST[ 'email_address' ];
-  $admin_phone_number = $_POST[ 'phone_number' ];
-  $admin_password = $_POST[ 'password' ];
-  $admin_confirm_password = $_POST[ 'confirm_password' ];
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $admin_first_name = $_POST['first_name'];
+    $admin_last_name = $_POST['last_name'];
+    $admin_email_address = $_POST['email_address'];
+    $admin_phone_number = $_POST['phone_number'];
+    $admin_password = $_POST['password'];
+    $admin_confirm_password = $_POST['confirm_password'];
 
-  if($admin_password != $admin_confirm_password){
-    echo "<script>alert('Passwords do not match')</script>";
-    echo "<script>window.location.href='signup.php'</script>";
-  }
-  
-  $encrypted_password = md5($admin_password);
+    if ($admin_password != $admin_confirm_password) {
+        echo "<script>alert('Passwords do not match')</script>";
+        echo "<script>window.location.href='signup.php'</script>";
+    }
 
-  //Write the query to submit our data to the database
-  $sql_query = "INSERT INTO admin(firstname,lastname,email_address,phone_number,password,status)
+    $encrypted_password = md5($admin_password);
+
+    //Write the query to submit our data to the database
+    $sql_query = "INSERT INTO admin(firstname,lastname,email_address,phone_number,password,status)
                VALUES('$admin_first_name','$admin_last_name' ,'$admin_email_address', '$admin_phone_number','$encrypted_password','0')";
-               
-  // Execute the query
-  $insert_submission = mysqli_query( $conn, $sql_query );
 
-  if ( $insert_submission === TRUE ) {
-      echo "<script>alert('Admin account created successfully')</script>";
-      echo "<script>window.location.href='index.php'</script>";
-  } else {
-      echo "<script>alert('Admin account failed to create')</script>";
-      echo "<script>window.location.href='signup.php'</script>";
-  }
->>>>>>> 9dc7b3e08d875464cd0077bc6f16b8fe2b897700
+    // Execute the query
+    $insert_submission = mysqli_query($conn, $sql_query);
+
+    if ($insert_submission === TRUE) {
+        echo "<script>alert('Admin account created successfully')</script>";
+        echo "<script>window.location.href='index.php'</script>";
+    } else {
+        echo "<script>alert('Admin account failed to create')</script>";
+        echo "<script>window.location.href='signup.php'</script>";
+    }
 }
 
 ?>
@@ -88,11 +66,7 @@ if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
             </h2>
         </div>
 
-<<<<<<< HEAD
-        <form method="post" class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
-=======
         <form method="post" action="" class="mt-8 space-y-6 rounded-md shadow-sm -space-y-px">
->>>>>>> 9dc7b3e08d875464cd0077bc6f16b8fe2b897700
             <div>
                 <label for="firstname" class="sr-only">First Name</label>
                 <input id="firstname" name="first_name" type="text" required
