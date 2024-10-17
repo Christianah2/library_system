@@ -17,8 +17,8 @@
     <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
         <?php
-    include('sidebar.php');
-    ?>
+        include('sidebar.php');
+        ?>
         <!-- Main Content -->
         <div class="flex-1 px-5 py-8 bg-powderblue">
             <div class="flex justify-between">
@@ -104,7 +104,7 @@
 
                     <!-- Modal Content -->
                     <div class="p-6">
-                        <form>
+                        <form method="post">
                             <div class="mb-4">
                                 <label for="category-name" class="block text-gray-700"> Title</label>
                                 <input type="text" id="book_title" name="book_title" placeholder="Enter Book Title"

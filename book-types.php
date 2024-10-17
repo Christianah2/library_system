@@ -1,27 +1,26 @@
 <?php
 include 'connection.php';
 
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_type_name = $_POST['book_type'];
     //Check if book type is already exist in database
     $check_query = "SELECT * FROM book_types WHERE book_type_name = '$book_type_name'";
     $verify_check_query = mysqli_query($conn, $check_query);
-    if(mysqli_num_rows($verify_check_query) > 0){
+    if (mysqli_num_rows($verify_check_query) > 0) {
         echo "<script>alert('Type Name already exist')</script>";
         echo "<script>window.location.href='book-types.php'</script>";
         exit();
     }
-    
+
     //Generate book type id;
-    $book_type_id = substr(strtoupper($book_type_name),0,3).mt_rand(0000,9999);
+    $book_type_id = substr(strtoupper($book_type_name), 0, 3) . mt_rand(0000, 9999);
     $sql_query = "INSERT INTO book_types (book_type_name,book_type_id) VALUES ('$book_type_name','$book_type_id')";
     $insert_result = mysqli_query($conn, $sql_query);
-    if($insert_result === TRUE){
+    if ($insert_result === TRUE) {
         echo "<script>alert('Book Type Added Successfully')</script>";
         echo "<script>window.location.href='book-types.php'</script>";
         exit();
-    }
-    else{
+    } else {
         echo "<script>alert('Failed to Add Book Type')</script>";
         echo "<script>window.location.href='book-types.php'</script>";
         exit();
@@ -30,7 +29,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
 
 $get_all_book_type_query = "SELECT * FROM book_types ORDER BY id DESC";
 $get_all_book_type_result = mysqli_query($conn, $get_all_book_type_query);
-$book_types = mysqli_fetch_all($get_all_book_type_result,MYSQLI_ASSOC);
+$book_types = mysqli_fetch_all($get_all_book_type_result, MYSQLI_ASSOC);
 
 ?>
 <!DOCTYPE html>
@@ -39,7 +38,7 @@ $book_types = mysqli_fetch_all($get_all_book_type_result,MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Book Categories</title>
+    <title>Book Types</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -52,8 +51,8 @@ $book_types = mysqli_fetch_all($get_all_book_type_result,MYSQLI_ASSOC);
     <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
         <?php
-    include('sidebar.php');
-    ?>
+        include('sidebar.php');
+        ?>
         <!-- Main Content -->
         <div class="flex-1 px-5 py-8 bg-powderblue">
             <div class="flex justify-between">
@@ -75,11 +74,12 @@ $book_types = mysqli_fetch_all($get_all_book_type_result,MYSQLI_ASSOC);
                         </tr>
                     </thead>
                     <tbody>
-                        <?php $i=1; foreach($book_types as $data){ ?>
+                        <?php $i = 1;
+                        foreach ($book_types as $data) { ?>
                         <tr class="bg-white border-b hover:bg-gray-100">
                             <td class="py-2 px-4"><?php echo $i++; ?></td>
                             <td class="py-2 px-4"><?php echo $data['book_type_name'] ?></td>
-                            <td class="py-2 px-4"><?php echo $data['no_of_books']?></td>
+                            <td class="py-2 px-4"><?php echo $data['no_of_books'] ?></td>
                             <td class="py-2 px-4">
                                 <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
                                     Edit
@@ -91,7 +91,7 @@ $book_types = mysqli_fetch_all($get_all_book_type_result,MYSQLI_ASSOC);
                         </tr>
                         <?php } ?>
 
-                        <!-- more rows can be added here as needed -->
+
                     </tbody>
                 </table>
             </div>

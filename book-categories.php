@@ -1,3 +1,43 @@
+<?php
+include 'connection.php';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $book_category_name = $_POST['genres'];
+
+    // Check if book category (genres) already exists in the database
+    $check_query = "SELECT * FROM genres WHERE genre_name = '$book_category_name'";
+    $verify_check_query = mysqli_query($conn, $check_query);
+    if (mysqli_num_rows($verify_check_query) > 0) {
+        echo "<script>alert('Book Category already exists')</script>";
+        echo "<script>window.location.href='book-categories.php'</script>";
+        exit();
+    }
+
+    // Generate book category (genres) ID
+    $book_category_id = substr(strtoupper($book_category_name), 0, 3) . mt_rand(0000, 9999);
+
+    // Insert into the genres table
+    $sql_query = "INSERT INTO genres (genre_name, genre_id) VALUES ('$book_category_name', '$book_category_id')";
+    $insert_result = mysqli_query($conn, $sql_query);
+
+    if ($insert_result === TRUE) {
+        echo "<script>alert('Book Category Added Successfully')</script>";
+        echo "<script>window.location.href='book-categories.php'</script>";
+        exit();
+    } else {
+        echo "<script>alert('Failed to Add Book Category')</script>";
+        echo "<script>window.location.href='book-categories.php'</script>";
+        exit();
+    }
+}
+
+// Get all book categories from the genres table
+$get_all_book_category_query = "SELECT * FROM genres ORDER BY id DESC";
+$get_all_book_category_result = mysqli_query($conn, $get_all_book_category_query);
+$book_category = mysqli_fetch_all($get_all_book_category_result, MYSQLI_ASSOC);
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,9 +56,7 @@
 <body class="min-h-screen bg-skyblue font-montserrat">
     <div class="flex flex-col md:flex-row">
         <!-- Sidebar -->
-        <?php 
-        include('sidebar.php');
-        ?>
+        <?php include('sidebar.php'); ?>
         <!-- Main Content -->
         <div class="flex-1 px-5 py-8 bg-powderblue">
             <div class="flex justify-between">
@@ -40,13 +78,12 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample Data -->
+                        <?php $i = 1;
+                        foreach ($book_category as $data) { ?>
                         <tr class="bg-white border-b hover:bg-gray-100">
-                            <td class="py-2 px-4">1</td>
-                            <td class="py-2 px-4">Science Fiction</td>
-                            <td class="py-2 px-4">
-                                These are books related to futuristic concepts and technology.
-                            </td>
+                            <td class="py-2 px-4"><?php echo $i++; ?></td>
+                            <td class="py-2 px-4"><?php echo $data['genre_name']; ?></td>
+                            <td class="py-2 px-4"><?php echo $data['no_of_books']; ?></td>
                             <td class="py-2 px-4">
                                 <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
                                     Edit
@@ -56,28 +93,10 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b hover:bg-gray-100">
-                            <td class="py-2 px-4">2</td>
-                            <td class="py-2 px-4">Non-Fiction</td>
-                            <td class="py-2 px-4">
-                                Non-fiction books present factual information, real events, and
-                                actual people.
-                            </td>
-                            <td class="py-2 px-4">
-                                <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
-                                    Edit
-                                </button>
-                                <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
-                        <!-- more rows can be added here as needed -->
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
-
-
 
             <!-- Modal Structure -->
             <div id="modal" class="fixed inset-0 bg-gray-800 bg-opacity-75 flex justify-center items-center hidden">
@@ -92,11 +111,10 @@
 
                     <!-- Modal Content -->
                     <div class="p-6">
-                        <form>
+                        <form action="" method="POST">
                             <div class="mb-4">
                                 <label for="category-name" class="block text-gray-700">Category Name</label>
-                                <input type="text" id="category-name" name="category_name"
-                                    placeholder="Enter category name"
+                                <input type="text" id="category-name" name="genres" placeholder="Enter category name"
                                     class="w-full p-2 border border-gray-400 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-cornflowerblue"
                                     required />
                             </div>
@@ -119,21 +137,18 @@
 
             <!-- JavaScript to Handle Modal -->
             <script>
-            // Get modal elements
             const modal = document.getElementById("modal");
             const openModal = document.getElementById("openModal");
             const closeModal = document.getElementById("closeModal");
 
-            // Event listeners to open and close the modal
             openModal.addEventListener("click", () => {
-                modal.classList.remove("hidden"); // Show the modal
+                modal.classList.remove("hidden");
             });
 
             closeModal.addEventListener("click", () => {
-                modal.classList.add("hidden"); // Hide the modal
+                modal.classList.add("hidden");
             });
 
-            // Close modal when clicking outside the modal content
             window.addEventListener("click", (event) => {
                 if (event.target === modal) {
                     modal.classList.add("hidden");
