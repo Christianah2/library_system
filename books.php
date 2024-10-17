@@ -106,7 +106,7 @@
                     <div class="p-6">
                         <form>
                             <div class="mb-4">
-                                <label for="category-name" class="block text-gray-700">Book Title</label>
+                                <label for="category-name" class="block text-gray-700"> Title</label>
                                 <input type="text" id="book_title" name="book_title" placeholder="Enter Book Title"
                                     class="w-full p-2 border border-gray-400 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-cornflowerblue"
                                     required />
@@ -117,6 +117,18 @@
                                 <input type="text" id="Author" name="name" placeholder="Enter Author's Name"
                                     class="w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue"
                                     required />
+                            </div>
+                            <div class="mb-4">
+                                <label for="description" class="block text-gray-700">Category</label>
+                                <select name="name"
+                                    class="w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue">
+                                </select>
+                            </div>
+                            <div class="mb-4">
+                                <label for="description" class="block text-gray-700">Type</label>
+                                <select name="name"
+                                    class="w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue">
+                                </select>
                             </div>
 
                             <button type="submit"

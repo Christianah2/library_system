@@ -1,3 +1,38 @@
+<?php
+include 'connection.php';
+
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $book_type_name = $_POST['book_type'];
+    //Check if book type is already exist in database
+    $check_query = "SELECT * FROM book_types WHERE book_type_name = '$book_type_name'";
+    $verify_check_query = mysqli_query($conn, $check_query);
+    if(mysqli_num_rows($verify_check_query) > 0){
+        echo "<script>alert('Type Name already exist')</script>";
+        echo "<script>window.location.href='book-types.php'</script>";
+        exit();
+    }
+    
+    //Generate book type id;
+    $book_type_id = substr(strtoupper($book_type_name),0,3).mt_rand(0000,9999);
+    $sql_query = "INSERT INTO book_types (book_type_name,book_type_id) VALUES ('$book_type_name','$book_type_id')";
+    $insert_result = mysqli_query($conn, $sql_query);
+    if($insert_result === TRUE){
+        echo "<script>alert('Book Type Added Successfully')</script>";
+        echo "<script>window.location.href='book-types.php'</script>";
+        exit();
+    }
+    else{
+        echo "<script>alert('Failed to Add Book Type')</script>";
+        echo "<script>window.location.href='book-types.php'</script>";
+        exit();
+    }
+}
+
+$get_all_book_type_query = "SELECT * FROM book_types ORDER BY id DESC";
+$get_all_book_type_result = mysqli_query($conn, $get_all_book_type_query);
+$book_types = mysqli_fetch_all($get_all_book_type_result,MYSQLI_ASSOC);
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,17 +69,17 @@
                     <thead>
                         <tr class="bg-steelblue text-white">
                             <th class="py-2 px-4 border-b text-left">ID</th>
-                            <th class="py-2 px-4 border-b text-left">Book Type</th>
-
+                            <th class="py-2 px-4 border-b text-left">Name</th>
+                            <th class="py-2 px-4 border-b text-left">No Of Book</th>
                             <th class="py-2 px-4 border-b text-left">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <!-- Sample Data -->
+                        <?php $i=1; foreach($book_types as $data){ ?>
                         <tr class="bg-white border-b hover:bg-gray-100">
-                            <td class="py-2 px-4">1</td>
-                            <td class="py-2 px-4">Paperback</td>
-
+                            <td class="py-2 px-4"><?php echo $i++; ?></td>
+                            <td class="py-2 px-4"><?php echo $data['book_type_name'] ?></td>
+                            <td class="py-2 px-4"><?php echo $data['no_of_books']?></td>
                             <td class="py-2 px-4">
                                 <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
                                     Edit
@@ -54,19 +89,8 @@
                                 </button>
                             </td>
                         </tr>
-                        <tr class="bg-white border-b hover:bg-gray-100">
-                            <td class="py-2 px-4">2</td>
-                            <td class="py-2 px-4">Hardcover</td>
+                        <?php } ?>
 
-                            <td class="py-2 px-4">
-                                <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
-                                    Edit
-                                </button>
-                                <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700">
-                                    Delete
-                                </button>
-                            </td>
-                        </tr>
                         <!-- more rows can be added here as needed -->
                     </tbody>
                 </table>
@@ -87,10 +111,10 @@
 
                     <!-- Modal Content -->
                     <div class="p-6">
-                        <form>
+                        <form method="post">
                             <div class="mb-4">
-                                <label for="book_type" class="block text-gray-700">Book Type</label>
-                                <input type="text" id="book_type" name="book_type" placeholder="Enter category name"
+                                <label for="book_type" class="block text-gray-700">Book Type Name</label>
+                                <input type="text" id="book_type" name="book_type" placeholder="Enter type name"
                                     class="w-full p-2 border border-gray-400 rounded-md mb-2 focus:outline-none focus:ring-2 focus:ring-cornflowerblue"
                                     required />
                             </div>
