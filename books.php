@@ -50,7 +50,7 @@ $book_title = mysqli_fetch_all($get_all_book_title_result, MYSQLI_ASSOC);
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Book Categories</title>
+    <title>Books</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
@@ -103,9 +103,12 @@ $book_title = mysqli_fetch_all($get_all_book_title_result, MYSQLI_ASSOC);
                             <td class="py-2 px-4"><?php echo $data['book_type_id']; ?></td>
                             <td class="py-2 px-4"><?php echo $data['genre_id']; ?></td>
                             <td class="py-2 px-4">
-                                <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
-                                    Edit
-                                </button>
+
+                                <a href="edit_books.php?books=<?php echo $book['id'] ?>"> <button
+                                        class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
+                                        Edit
+                                    </button></a>
+
                                 <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700">
                                     Delete
                                 </button>
