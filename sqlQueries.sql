@@ -55,4 +55,4 @@ CREATE TABLE book_logs (id INT  AUTO_INCREMENT PRIMARY KEY,
 						borrowed_date DATETIME DEFAULT CURRENT_TIMESTAMP,
                         return_date DATE);
                         
-                        
+alter table genres add column description varchar(500);
