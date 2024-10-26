@@ -84,9 +84,12 @@ $book_types = mysqli_fetch_all($get_all_book_type_result, MYSQLI_ASSOC);
                                 <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
                                     Edit
                                 </button>
-                                <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700">
-                                    Delete
-                                </button>
+
+                                <a
+                                    href="delete.php?table_name=book_types&column_name=book_type_id&column_data=<?php echo $data['book_type_id'] ?>">
+                                    <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700">
+                                        Delete
+                                    </button> </a>
                             </td>
                         </tr>
                         <?php } ?>

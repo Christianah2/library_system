@@ -113,9 +113,11 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                                         Edit
                                     </button></a>
 
-                                <button class='px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700'>
-                                    Delete
-                                </button>
+                                <a
+                                    href="delete.php?table_name=books&column_name=book_id&column_data=<?php echo $data['book_id'] ?>">
+                                    <button class='px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700'>
+                                        Delete
+                                    </button></a>
                             </td>
                         </tr>
                         <?php } ?>
