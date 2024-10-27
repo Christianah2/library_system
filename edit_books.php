@@ -1,5 +1,5 @@
 <?php
-$book_sn_id = $_GET['books'];
+$book_sn_id = $_GET['book_id'];
 include 'connection.php';
 
 // Fetch book data based on the book's serial (id) number
@@ -36,6 +36,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         echo "<script>alert('Book update failed');</script>";
     }
 }
+
+//get all list of books categories
+$book_type_query = ('SELECT * FROM book_types ORDER BY id DESC');
+$book_type_result = mysqli_query($conn, $book_type_query);
+
+if ($book_type_result) {
+    $book_type_list = mysqli_fetch_all($book_type_result, MYSQLI_ASSOC);
+} else {
+    $book_type_list = [];
+}
+
+$book_genre_query = ('SELECT * FROM genres ORDER BY id DESC');
+$book_genre_result = mysqli_query($conn, $book_genre_query);
+
+if ($book_genre_result) {
+    $book_genre_list = mysqli_fetch_all($book_genre_result, MYSQLI_ASSOC);
+} else {
+    $book_genre_list = [];
+}
+
 ?>
 
 
@@ -64,7 +84,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             <div class='flex justify-between items-center'>
                 <p class='text-3xl font-bold text-steelblue'>Edit Book</p>
             </div>
-            <form method='post' action='edit_book.php'>
+            <form method='post' action=''>
                 <div class='pt-7 grid gap-y-5'>
                     <!-- Book Title -->
                     <div class='grid'>
@@ -117,6 +137,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for='book_type_id' class='block text-gray-700 text-sm font-bold mb-2'>Book Type</label>
                         <select id='book_type_id' name='book_type_id'
                             class='border border-gray-400 px-5 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
+
+                            <option value="">...Select</option>
+                            <?php
+                            foreach ($book_type_list as $type_data) {
+                            ?>
+                            <option value="<?php echo $type_data['book_type_id']; ?>">
+                                <?php echo $type_data['book_type_name']; ?>
+                            </option>
+                            <?php } ?>
                         </select>
                     </div>
 
@@ -125,12 +154,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <label for='genre_id' class='block text-gray-700 text-sm font-bold mb-2'>Genre</label>
                         <select id='genre_id' name='genre_id'
                             class='border border-gray-400 px-5 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
+                            <option value=''>...Select</option>
+                            <?php
+                            foreach ($book_genre_list as $genre_data) { ?>
+                            <option value="<?php echo $genre_data['genre_id'] ?>">
+                                <?php echo $genre_data['genre_name'] ?></option>
+                            <?php }
+                            ?>
                         </select>
                     </div>
 
                     <!-- Submit Button -->
-                    <button class='bg-steelblue py-3 rounded-md text-white hover:bg-cornflowerblue'
-                        type='submit'>Submit</button>
+                    <button class='bg-steelblue py-3 rounded-md text-white hover:bg-cornflowerblue' type='submit'>UPDATE
+                        BOOKS</button>
                 </div>
             </form>
         </div>

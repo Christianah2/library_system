@@ -108,10 +108,12 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                             <td class='py-2 px-4'><?php echo $data['genre_id']; ?></td>
                             <td class='py-2 px-4'>
 
-                                <a href="edit_books.php?books=<?php echo $book['id'] ?>"> <button
+                                <a href="edit_books.php?book_id=<?php echo $data['id'] ?>"> <button
                                         class='px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700'>
                                         Edit
                                     </button></a>
+
+
 
                                 <a
                                     href="delete.php?table_name=books&column_name=book_id&column_data=<?php echo $data['book_id'] ?>">
@@ -175,7 +177,7 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                             </div>
 
                             <div class='mb-4'>
-                                <label for='genre_id' class='block text-gray-700'>Book Types</label>
+                                <label for='book_type_id' class='block text-gray-700'>Book Types</label>
                                 <select name='book_type_id'
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
                                     <option value=''>...select</option>
@@ -187,8 +189,8 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                             </div>
 
                             <div class='mb-4'>
-                                <label for='book_type_id' class='block text-gray-700'>Genre Type</label>
-                                <select name='book_genre_id'
+                                <label for='genre_id' class='block text-gray-700'>Genre Type</label>
+                                <select name='genre_id'
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
                                     <option value=''>...select</option>
                                     <?php
