@@ -81,15 +81,18 @@ $book_types = mysqli_fetch_all($get_all_book_type_result, MYSQLI_ASSOC);
                             <td class="py-2 px-4"><?php echo $data['book_type_name'] ?></td>
                             <td class="py-2 px-4"><?php echo $data['no_of_books'] ?></td>
                             <td class="py-2 px-4">
-                                <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
-                                    Edit
-                                </button>
+                                <a href="edit_book_types.php?book_type_id=<?php echo $data['id'] ?>">
+                                    <button class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
+                                        Edit
+                                    </button>
+                                </a>
 
                                 <a
                                     href="delete.php?table_name=book_types&column_name=book_type_id&column_data=<?php echo $data['book_type_id'] ?>">
                                     <button class="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700">
                                         Delete
-                                    </button> </a>
+                                    </button>
+                                </a>
                             </td>
                         </tr>
                         <?php } ?>
