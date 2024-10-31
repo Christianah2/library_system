@@ -10,7 +10,7 @@ $book_data  = mysqli_fetch_assoc(mysqli_query($conn, $sqlQuery));
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_title = $_POST['title'];
     $author_id = $_POST['author_id'];
-    $year_of_production = $_POST['year_of_production'];
+    $year_of_production = date( 'Y', strtotime( $_POST['year_of_production']));
     $age_barrier = $_POST['age_barrier'];
     $no_of_pages = $_POST['no_of_pages'];
     $book_type_id = $_POST['book_type_id'];

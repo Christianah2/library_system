@@ -1,0 +1,6 @@
+mysqli_query -- query database
+mysqli_num_rows --  you are counting the number of rows for the particular query 
+mysqli_fetch_array  - you are converting the single result to an array    id=>1, book_type_id=>1, book_
+
+mysqli_fetch_all - you are fetching all the rows for the particular query
+MYSQLI_ASSOC - It allows you to convert multiple result to an array object

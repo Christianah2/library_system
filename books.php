@@ -1,34 +1,50 @@
 <?php
 include 'connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $book_title = $_POST['book_title'];
-    $author_id = $_POST['author'];
-    $year_of_production = $_POST['year'];
-    $age_barrier = $_POST['age'];
-    $no_of_pages = $_POST['number'];
-    $book_type_id = $_POST['book_type_id'];
-    $genre_id = $_POST['genre_id'];
+if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+    $book_title = $_POST[ 'book_title' ];
+    $author_name = $_POST[ 'author' ];
+    $year_of_production = date( 'Y', strtotime( $_POST[ 'year_of_production' ] ) );
+    $age_barrier = $_POST[ 'pg_rated' ];
+    $no_of_pages = $_POST[ 'number_of_pages' ];
+    $book_type_id = $_POST[ 'book_type_id' ];
+    $genre_id = $_POST[ 'genre_id' ];
 
     // Check if the book already exists in the database
     $check_query = "SELECT * FROM books WHERE title = '$book_title'";
-    $verify_check_query = mysqli_query($conn, $check_query);
-    if (mysqli_num_rows($verify_check_query) > 0) {
+    $verify_check_query = mysqli_query( $conn, $check_query );
+    if ( mysqli_num_rows( $verify_check_query ) > 0 ) {
         echo "<script>alert('Book already exists')</script>";
         echo "<script>window.location.href='books.php'</script>";
         exit();
     }
-
     // Generate book ID
-    $book_id = substr(strtoupper($book_title), 0, 3) . mt_rand(0000, 9999);
+    $book_id = substr( strtoupper( $book_title ), 0, 3 ) . mt_rand( 0000, 9999 );
+    $author_id = '';
+    //Check if author exists before
+    $is_author_exist = mysqli_query( $conn, "SELECT * FROM authors WHERE author_name = '$author_name'" );
+    if ( mysqli_num_rows( $is_author_exist ) > 0 ) {
+        $author_id = mysqli_fetch_array( $is_author_exist )[ 'author_id' ];
+    } else {
+        // Generate author id
+        $author_id = substr( strtoupper( $author_name ), 0, 3 ). mt_rand( 0000, 9999 );
+    }
 
     // Insert into the books table
     $sql_query = "INSERT INTO books (title, book_id, author_id, year_of_production, age_barrier, no_of_pages, book_type_id, genre_id) 
                   VALUES ('$book_title', '$book_id', '$author_id', '$year_of_production', '$age_barrier', '$no_of_pages', '$book_type_id', '$genre_id')";
-    $insert_result = mysqli_query($conn, $sql_query);
+    $insert_result = mysqli_query( $conn, $sql_query );
 
-    if ($insert_result === TRUE) {
-        echo "<script>alert('Book title Added Successfully')</script>";
+    if ( $insert_result === TRUE ) {
+        //Update the No of books for the particular genre,
+        mysqli_query( $conn, "UPDATE genres SET no_of_books = no_of_books + 1 WHERE genre_id = '$genre_id'" );
+        mysqli_query( $conn, "UPDATE book_types SET no_of_books = no_of_books + 1 WHERE book_type_id = '$book_type_id'" );
+        if ( mysqli_num_rows( $is_author_exist ) > 0 ) {
+            mysqli_query( $conn, "UPDATE authors SET no_of_books = no_of_books + 1 WHERE author_id = '$author_id'" );
+        } else {
+            mysqli_query( $conn, "INSERT INTO authors (author_name, author_id,no_of_books) VALUES ('$author_name', '$author_id','1')" );
+        }
+        echo "<script>alert('Books Added Successfully')</script>";
         echo "<script>window.location.href='books.php'</script>";
         exit();
     } else {
@@ -39,13 +55,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Get all book titles from the books table
-$get_all_book_title_query = 'SELECT * FROM books ORDER BY id DESC';
-$get_all_book_title_result = mysqli_query($conn, $get_all_book_title_query);
-$book_title = mysqli_fetch_all($get_all_book_title_result, MYSQLI_ASSOC);
+$get_all_book_title_query = 'SELECT b.id, b.book_id,title,author_name,year_of_production,age_barrier,no_of_pages,book_type_name,genre_name
+                            FROM books b
+                            LEFT JOIN book_types bt
+                            USING (book_type_id)
+                            LEFT JOIN genres g
+                            USING (genre_id)
+                            LEFT JOIN authors a
+                            ON a.author_id = b.author_id ORDER BY id DESC';
+$get_all_book_title_result = mysqli_query( $conn, $get_all_book_title_query );
+$book_title = mysqli_fetch_all( $get_all_book_title_result, MYSQLI_ASSOC );
 
 //Get all list of books categories
-$book_type_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM book_types ORDER BY id DESC'), MYSQLI_ASSOC);
-$book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres ORDER BY id DESC'), MYSQLI_ASSOC);
+$book_type_list = mysqli_fetch_all( mysqli_query( $conn, 'SELECT * FROM book_types ORDER BY id DESC' ), MYSQLI_ASSOC );
+$book_genre_list = mysqli_fetch_all( mysqli_query( $conn, 'SELECT * FROM genres ORDER BY id DESC' ), MYSQLI_ASSOC );
+$author_list = mysqli_fetch_all( mysqli_query( $conn, 'SELECT * FROM authors ORDER BY id DESC' ), MYSQLI_ASSOC );
 ?>
 
 <!DOCTYPE html>
@@ -67,8 +91,8 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
     <div class='flex flex-col md:flex-row'>
         <!-- Sidebar -->
         <?php
-        include('sidebar.php');
-        ?>
+include( 'sidebar.php' );
+?>
         <!-- Main Content -->
         <div class='flex-1 px-5 py-8 bg-powderblue'>
             <div class='flex justify-between'>
@@ -89,31 +113,38 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                             <th class='py-2 px-4 border-b text-left'>Year of Production</th>
                             <th class='py-2 px-4 border-b text-left'>Number of Pages</th>
                             <th class='py-2 px-4 border-b text-left'>PG Rated</th>
-                            <th class='py-2 px-4 border-b text-left'>Book Type ID</th>
-                            <th class='py-2 px-4 border-b text-left'>Genre ID</th>
+                            <th class='py-2 px-4 border-b text-left'>Book Type</th>
+                            <th class='py-2 px-4 border-b text-left'>Genre</th>
                             <th class='py-2 px-4 border-b text-left'>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         <?php $i = 1;
-                        foreach ($book_title as $data) { ?>
+foreach ( $book_title as $data ) {
+    ?>
                         <tr class='bg-white border-b hover:bg-gray-100'>
-                            <td class='py-2 px-4'><?php echo $i++; ?> </td>
-                            <td class='py-2 px-4'><?php echo $data['title']; ?></td>
-                            <td class='py-2 px-4'><?php echo $data['author_id']; ?></td>
-                            <td class='py-2 px-4'><?php echo $data['year_of_production']; ?></td>
-                            <td class='py-2 px-4'><?php echo $data['no_of_pages']; ?></td>
-                            <td class='py-2 px-4'><?php echo $data['age_barrier']; ?></td>
-                            <td class='py-2 px-4'><?php echo $data['book_type_id']; ?></td>
-                            <td class='py-2 px-4'><?php echo $data['genre_id']; ?></td>
+                            <td class='py-2 px-4'><?php echo $i++;
+    ?> </td>
+                            <td class='py-2 px-4'><?php echo $data[ 'title' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'author_name' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'year_of_production' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'no_of_pages' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'age_barrier' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'book_type_name' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'genre_name' ];
+    ?></td>
                             <td class='py-2 px-4'>
 
                                 <a href="edit_books.php?book_id=<?php echo $data['id'] ?>"> <button
                                         class='px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700'>
                                         Edit
                                     </button></a>
-
-
 
                                 <a
                                     href="delete.php?table_name=books&column_name=book_id&column_data=<?php echo $data['book_id'] ?>">
@@ -122,7 +153,8 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                                     </button></a>
                             </td>
                         </tr>
-                        <?php } ?>
+                        <?php }
+    ?>
                     </tbody>
                 </table>
             </div>
@@ -150,28 +182,37 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
 
                             <div class='mb-4'>
                                 <label for='author' class='block text-gray-700'>Author</label>
-                                <input type='text' id='author' name='author' placeholder="Enter Author's Name"
+                                <input list='options' id='author' name='author' placeholder="Enter Author's Name"
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                                     required />
+                                <datalist id='options'>
+                                    <?php foreach ( $author_list as $author_data ) {
+        ?>
+                                    <option value='<?php echo $author_data['author_name'] ?>'>
+                                        <?php }
+        ?>
+                                </datalist>
                             </div>
 
                             <div class='mb-4'>
                                 <label for='age' class='block text-gray-700'>PG Rated</label>
-                                <input type='number' id='pg' name='age' placeholder='Enter Age Range'
+                                <input type='number' id='pg' name='pg_rated' placeholder='Enter Age Range'
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                                     required />
                             </div>
 
                             <div class='mb-4'>
                                 <label for='year' class='block text-gray-700'>Year of Production</label>
-                                <input type='date' id='year' name='year' placeholder='Enter Year of Production'
+                                <input type='date' id='year' name='year_of_production'
+                                    placeholder='Enter Year of Production'
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                                     required />
                             </div>
 
                             <div class='mb-4'>
                                 <label for='number' class='block text-gray-700'>Number of Pages</label>
-                                <input type='number' id='number' name='number' placeholder='Enter Number of Pages'
+                                <input type='number' id='number' name='number_of_pages'
+                                    placeholder='Enter Number of Pages'
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                                     required />
                             </div>
@@ -181,10 +222,12 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                                 <select name='book_type_id'
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
                                     <option value=''>...select</option>
-                                    <?php foreach ($book_type_list as $type_data) { ?>
+                                    <?php foreach ( $book_type_list as $type_data ) {
+            ?>
                                     <option value='<?php echo $type_data['book_type_id'] ?>'>
-                                        <?php echo $type_data['book_type_name'] ?></option>
-                                    <?php } ?>
+                                        <?php echo $type_data[ 'book_type_name' ] ?></option>
+                                    <?php }
+            ?>
                                 </select>
                             </div>
 
@@ -194,12 +237,12 @@ $book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres OR
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
                                     <option value=''>...select</option>
                                     <?php
-                                    foreach ($book_genre_list as $genre_data) {
-                                    ?>
-                                    <option value="<?php $genre_data['genre_id'] ?>">
-                                        <?php echo $genre_data['genre_name'] ?></option>
+            foreach ( $book_genre_list as $genre_data ) {
+                ?>
+                                    <option value="<?php echo $genre_data['genre_id'] ?>">
+                                        <?php echo $genre_data[ 'genre_name' ] ?></option>
                                     <?php }
-                                    ?>
+                ?>
                                 </select>
                             </div>
 

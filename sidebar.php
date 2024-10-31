@@ -11,6 +11,9 @@ include 'security_check.php';
         <a href="books.php" class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
             View Books
         </a>
+        <a href="authors.php" class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
+            Authors
+        </a>
         <a href="book-genre.php"
             class="block px-4 py-2 bg-cornflowerblue rounded-md hover:bg-white hover:text-steelblue">
             Books Genres

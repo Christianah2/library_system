@@ -41,7 +41,7 @@
                         <p class="text-5xl font-semibold pt-6 ">2</p>
                     </div>
                     <div class="bg-red-600 rounded-lg p-4 text-white">
-                        <p class="text-lg">No of Books</p>
+                        <p class="text-lg">No of Authors</p>
                         <p class="text-5xl font-semibold pt-6 ">12</p>
                     </div>
                     <div class="bg-cyan-600 rounded-lg p-4 text-white">
