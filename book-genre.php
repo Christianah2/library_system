@@ -86,16 +86,16 @@ $book_genres = mysqli_fetch_all($get_all_genres_result, MYSQLI_ASSOC);
                             <td class="py-2 px-4"><?php echo $i++; ?></td>
                             <td class="py-2 px-4"><?php echo $data['genre_name']; ?></td>
                             <td class="py-2 px-4">
-                                <?php echo (strlen($data['description']) > 80) ? substr($data['description'],0,80) ."..." : $data['description']; ?>
+                                <?php echo (strlen($data['description']) > 80) ? substr($data['description'], 0, 80) . "..." : $data['description']; ?>
                             </td>
                             <td class="py-2 px-4"><?php echo $data['no_of_books']; ?></td>
                             <td class="py-2 px-4">
-                                <a href="edit_book_genre.php?genre_id=<?php echo $data['genre_id']?>"> <button
+                                <a href="edit_book_genre.php?genre_id=<?php echo $data['genre_id'] ?>"> <button
                                         class="px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700">
                                         Edit
                                     </button></a>
                                 <a
-                                    href="delete.php?table_name=genres&column_name=genre_id&column_data=<?php echo $data['genre_id']?>">
+                                    href="delete.php?table_name=genres&column_name=genre_id&column_data=<?php echo $data['genre_id'] ?>">
                                     <button class=" px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700">
                                         Delete
                                     </button></a>
