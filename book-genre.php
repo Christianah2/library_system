@@ -137,10 +137,12 @@ $book_genres = mysqli_fetch_all($get_all_genres_result, MYSQLI_ASSOC);
                                     required></textarea>
                             </div>
 
-                            <button type="submit"
-                                class="w-full px-4 py-2 bg-steelblue text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Create
-                            </button>
+                            <div class='flex justify-center'>
+                                <button type="submit"
+                                    class="w-full px-4 py-2 bg-steelblue text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Create
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

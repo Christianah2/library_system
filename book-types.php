@@ -14,6 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     //Generate book type id;
     $book_type_id = substr(strtoupper($book_type_name), 0, 3) . mt_rand(0000, 9999);
+
+    // Insert into the book type table
     $sql_query = "INSERT INTO book_types (book_type_name,book_type_id) VALUES ('$book_type_name','$book_type_id')";
     $insert_result = mysqli_query($conn, $sql_query);
     if ($insert_result === TRUE) {
@@ -126,11 +128,12 @@ $book_types = mysqli_fetch_all($get_all_book_type_result, MYSQLI_ASSOC);
                             </div>
 
 
-
-                            <button type="submit"
-                                class="w-full px-4 py-2 bg-steelblue text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                Create
-                            </button>
+                            <div class='flex justify-center'>
+                                <button type="submit"
+                                    class="w-full px-4 py-2 bg-steelblue text-white rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                    Create
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

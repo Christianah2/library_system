@@ -238,7 +238,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                                 </select>
                             </div>
 
-                            <div class='flex justify-end'>
+                            <div class='flex justify-center'>
                                 <button type='submit'
                                     class='px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue'>
                                     Add Book

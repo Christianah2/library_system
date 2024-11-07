@@ -8,10 +8,10 @@ $author_data  = mysqli_fetch_assoc(mysqli_query($conn, $sqlQuery));
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $author_name = $_POST['author_name'];
-    $no_of_books = $_POST['no_of_books'];
+
 
     //sql qery to update author's information
-    $sql_query = "UPDATE authors SET author_name='$author_name', no_of_books='$no_of_books' WHERE id='$author_sn_id'";
+    $sql_query = "UPDATE authors SET author_name='$author_name' WHERE id='$author_sn_id'";
     $update_author_data = mysqli_query($conn, $sql_query);
 
     if ($update_author_data === TRUE) {
@@ -52,7 +52,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <div class='pt-7 grid gap-y-5'>
                     <div class='mb-4'>
                         <label for='author' class='block text-gray-700 font-bold mb-2'>Author</label>
-                        <input list='options' id='author' name='author_name' placeholder="Enter Author's Name"
+                        <input list='options' id='author' name='author_name'
+                            value="<?php echo $author_data['author_name']; ?>"
                             class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                             required />
                         <datalist id='options'>
@@ -61,16 +62,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 <?php } ?>
                         </datalist>
                     </div>
-                    <div class='mb-4'>
-                        <label for='number' class='block text-gray-700 font-bold mb-2'>Number of Books</label>
-                        <input type='number' id='number' name='no_of_books' placeholder='Enter Number of books'
-                            class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
-                            required />
+
+                    <div class='flex justify-center'>
+                        <button type='submit'
+                            class='px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue'>
+                            UPDATE AUTHOR
+                        </button>
                     </div>
 
-                    <button type='submit' class='py-3 bg-steelblue text-white rounded-md hover:bg-cornflowerblue'>
-                        UPDATE AUTHOR
-                    </button>
                 </div>
             </form>
 

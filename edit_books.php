@@ -10,7 +10,7 @@ $book_data  = mysqli_fetch_assoc(mysqli_query($conn, $sqlQuery));
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $book_title = $_POST['title'];
     $author_id = $_POST['author_id'];
-    $year_of_production = date( 'Y', strtotime( $_POST['year_of_production']));
+    $year_of_production = date('Y', strtotime($_POST['year_of_production']));
     $age_barrier = $_POST['age_barrier'];
     $no_of_pages = $_POST['no_of_pages'];
     $book_type_id = $_POST['book_type_id'];
@@ -84,7 +84,7 @@ if ($book_genre_result) {
             <div class='flex justify-between items-center'>
                 <p class='text-3xl font-bold text-steelblue'>Edit Book</p>
             </div>
-            <form method='post' action=''>
+            <form method='post'>
                 <div class='pt-7 grid gap-y-5'>
                     <!-- Book Title -->
                     <div class='grid'>
@@ -165,8 +165,12 @@ if ($book_genre_result) {
                     </div>
 
                     <!-- Submit Button -->
-                    <button class='bg-steelblue py-3 rounded-md text-white hover:bg-cornflowerblue' type='submit'>UPDATE
-                        BOOKS</button>
+                    <div class='flex justify-center'>
+                        <button type='submit'
+                            class='px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue'>
+                            UPDATE BOOKS
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

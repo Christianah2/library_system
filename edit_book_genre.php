@@ -1,5 +1,5 @@
 <?php
-$book_genre_id = $_GET[ 'genre_id' ];
+$book_genre_id = $_GET['genre_id'];
 include 'connection.php';
 
 // Fetch book data based on the book's serial (id) number
@@ -72,8 +72,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 
                     <!-- Submit Button -->
-                    <button class='bg-steelblue py-3 rounded-md text-white hover:bg-cornflowerblue' type='submit'>UPDATE
-                        GENRE TYPE</button>
+                    <div class='flex justify-center'>
+                        <button type='submit'
+                            class='px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue'>
+                            UPDATE GENRE TYPE
+                        </button>
+                    </div>
                 </div>
             </form>
         </div>

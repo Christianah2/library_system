@@ -3,7 +3,6 @@ include 'connection.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $author_name = $_POST['author_name'];
-    $no_of_books = $_POST['no_of_books'];
 
     // Check if author exists before inserting
     $check_query = mysqli_query($conn, "SELECT * FROM authors WHERE author_name = '$author_name'");
@@ -17,8 +16,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $author_id = substr(strtoupper($author_name), 0, 3) . mt_rand(0000, 9999);
 
     // Insert into the authors table
-    $sql_query = "INSERT INTO authors (author_id, author_name, no_of_books) 
-                  VALUES ('$author_id', '$author_name', '$no_of_books')";
+    $sql_query = "INSERT INTO authors (author_id, author_name) 
+                  VALUES ('$author_id', '$author_name')";
     $insert_result = mysqli_query($conn, $sql_query);
 
     if ($insert_result === TRUE) {
@@ -31,6 +30,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 }
+
+//to get the total number of books written by each author
+$no_of_books_query = "SELECT a.author_id, a.author_name, 
+                      COUNT(b.book_id) 
+                      AS no_of_books
+                      FROM authors a
+                      LEFT JOIN books b 
+                      ON a.author_id = b.author_id
+                      ORDER BY a.author_id, a.author_name";
+$no_of_books_result = mysqli_query($conn, $no_of_books_query);
+
+// Fetch results as an associative array
+$no_of_books_query = mysqli_fetch_all($no_of_books_result, MYSQLI_ASSOC);
 
 // Fetch all authors
 $authors_query = "SELECT * FROM authors";
@@ -132,13 +144,8 @@ $authors_data = mysqli_fetch_all($authors_result, MYSQLI_ASSOC);
                                         <?php } ?>
                                 </datalist>
                             </div>
-                            <div class='mb-4'>
-                                <label for='number' class='block text-gray-700'>Number of Books</label>
-                                <input type='number' id='number' name='no_of_books' placeholder='Enter Number of books'
-                                    class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
-                                    required />
-                            </div>
-                            <div class='flex justify-end'>
+
+                            <div class='flex justify-center'>
                                 <button type='submit'
                                     class='px-4 py-2 bg-cornflowerblue text-white rounded-md hover:bg-steelblue'>
                                     Add Author
