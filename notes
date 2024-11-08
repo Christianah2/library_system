@@ -1,6 +1,16 @@
-mysqli_query -- query database
-mysqli_num_rows --  you are counting the number of rows for the particular query 
-mysqli_fetch_array  - you are converting the single result to an array    id=>1, book_type_id=>1, book_
+mysqli*query -- query database
+mysqli_num_rows -- you are counting the number of rows for the particular query
+mysqli_fetch_array - you are converting the single result to an array id=>1, book_type_id=>1, book*
 
 mysqli_fetch_all - you are fetching all the rows for the particular query
 MYSQLI_ASSOC - It allows you to convert multiple result to an array object
+
+1. mysqli_fetch_assoc():-- Function: Fetches a single row from the result set as an associative array.
+   Usage:-- Typically used when you only need to retrieve a single row (e.g., one count or one record).
+   Return Structure:-- Returns an associative array representing one row. For example:
+   Functional Difference:-- mysqli_fetch_assoc() retrieves one row at a time and moves the pointer to the next row in the result set, which is useful for iterating over rows in a while loop.
+
+2. mysqli_fetch_all():-- Function: Fetches all rows from the result set as an array of associative arrays.
+   Usage:-- Used when you want to retrieve all rows at once, typically for displaying multiple rows of data.
+   Return Structure:-- Returns a multi-dimensional array, with each element being an associative array representing a row.
+   Functional Difference:-- mysqli_fetch_all() retrieves all rows at once and is more memory-intensive, as it loads the entire result set into memory. It's useful when you need to work with the entire data set at once rather than row by row.
