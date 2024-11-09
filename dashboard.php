@@ -2,21 +2,24 @@
 include 'connection.php';
 
 // query to get the number of books in the database
-$book_count_query = "SELECT COUNT(*) AS book_count FROM books";
-$book_count_result = mysqli_query($conn, $book_count_query);
-$book_count = mysqli_fetch_assoc($book_count_result)['book_count'];
+$book_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) book_count FROM books"))['book_count'];
 
 // query to get the number of authors in the database
-$author_count_query = "SELECT COUNT(*) AS author_count FROM authors";
-$author_count_result = mysqli_query($conn, $author_count_query);
-$author_count = mysqli_fetch_assoc($author_count_result)['author_count'];
+$author_count = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) author_count FROM authors"))['author_count'];
+
+// query to get the number of books available 
+$available_books = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) available_book FROM books WHERE status ='0'"))['available_book'];
+
+// query to get the number of books borrowed 
+$borrowed_books = mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) borrow_book FROM books WHERE status ='1'"))['borrow_book'];
 
 // query to fetch all books from the database
 $books_query = "SELECT books.title, authors.author_name, book_types.book_type_name, genres.genre_name
                 FROM books 
                 LEFT JOIN authors ON books.author_id = authors.author_id 
                 LEFT JOIN genres ON books.genre_id = genres.genre_id
-                LEFT JOIN book_types ON books.book_type_id = book_types.book_type_id";
+                LEFT JOIN book_types ON books.book_type_id = book_types.book_type_id
+                WHERE books.status ='0' LIMIT 15";
 $books_result = mysqli_query($conn, $books_query);
 
 if (!$books_result) {
@@ -73,11 +76,11 @@ if (!$books_result) {
                     </div>
                     <div class="bg-green-600 rounded-lg p-4 text-white">
                         <p class="text-lg">No of Available books</p>
-                        <p class="text-5xl font-semibold pt-6 ">8</p>
+                        <p class="text-5xl font-semibold pt-6 "><?php echo $available_books?></p>
                     </div>
                     <div class="bg-red-600 rounded-lg p-4 text-white">
                         <p class="text-lg">No of Books Borrowed</p>
-                        <p class="text-5xl font-semibold pt-6 ">2</p>
+                        <p class="text-5xl font-semibold pt-6 "><?php echo $borrowed_books ?></p>
                     </div>
                 </div>
             </div>
