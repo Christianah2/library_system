@@ -10,12 +10,12 @@ $deleteQuery = "DELETE FROM $table_name WHERE $column_name = '$column_data'";
 $execute_query = mysqli_query($conn, $deleteQuery);
 
 if ($execute_query) {
-    echo "<script>
+  echo "<script>
             alert('Data Deleted Successfully');
             window.location.href = '" . $_SERVER['HTTP_REFERER'] . "';
           </script>";
 } else {
-    echo "<script>
+  echo "<script>
             alert('Failed to delete data');
             window.location.href = '" . $_SERVER['HTTP_REFERER'] . "';
           </script>";

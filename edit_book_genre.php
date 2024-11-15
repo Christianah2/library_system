@@ -53,18 +53,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
             <form method='post'>
                 <div class='pt-7 grid gap-y-5'>
-                    <!-- Book Title -->
+
                     <div class='grid'>
-                        <label for='title' class='block text-gray-700 text-sm font-bold mb-2'>Genre Name</label>
-                        <input type='text' id='title' value="<?php echo $genre_data['genre_name']; ?>" name='genre_name'
+                        <label for='genre-name' class='block text-gray-700 text-sm font-bold mb-2'>Genre Name</label>
+                        <input type='text' id='genre-name' value="<?php echo $genre_data['genre_name']; ?>"
+                            name='genre_name'
                             class='border border-gray-400 px-5 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                             required>
                     </div>
 
-                    <!-- Author -->
+
                     <div class='grid'>
-                        <label for='author_id' class='block text-gray-700 text-sm font-bold mb-2'>Description</label>
-                        <input type='text' id='author_id' value="<?php echo $genre_data['description']; ?>"
+                        <label for='description' class='block text-gray-700 text-sm font-bold mb-2'>Description</label>
+                        <input type='text' id='description' value="<?php echo $genre_data['description']; ?>"
                             name='description'
                             class='border border-gray-400 px-5 py-2 w-full rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                             required>
