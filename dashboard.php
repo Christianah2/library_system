@@ -96,7 +96,7 @@ if (!$books_result) {
                         <p class="text-sm text-gray-600">Author: <?php echo ($book['author_name']); ?></p>
                         <p class="text-sm text-gray-600">Type: <?php echo ($book['book_type_name']); ?></p>
                         <p class="text-sm text-gray-600">Genre: <?php echo ($book['genre_name']); ?></p>
-                        <button class="mt-4 px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
+                        <button class="mt-4 px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue borrow-book-button " data-title= "<?php echo ($book['title']); ?>">
                             Borrow Book
                         </button>
                     </div>
@@ -140,7 +140,7 @@ if (!$books_result) {
     </div>
 
     <!-- javacsript that handles the functionality of the modal -->
-    
+
     <script>
     const modal = document.getElementById('borrowBookModal');
     const closeModal = document.getElementById('closeModal');
