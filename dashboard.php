@@ -103,24 +103,71 @@ if (!$books_result) {
                     <?php } ?>
                 </div>
 
+                <!-- Modal structure -->
+            <div id="borrowBookModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
+             <div class="bg-white p-6 rounded-md shadow-md w-1/3">
+                    <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
+                 <p class="text-sm text-gray-600 mb-4" id="modalBookDetails"></p>
+                <div class="flex justify-end">
+                    <button id="closeModal" class="px-4 py-2 bg-gray-300 rounded-md hover:bg-gray-400 mr-2">
+                        Cancel
+                    </button>
+                    <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
+                         Confirm
+                    </button>
+                </div>
+            </div>
+            </div>
+
+
                 <!-- Borrowed Books Section -->
                 <div class="mt-8">
                     <h3 class="text-xl font-semibold text-gray-900">Borrowed Books</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                        <?php while ($book = mysqli_fetch_assoc ($books_result)){?>
+                         
                         <div class="bg-white p-4 rounded-md shadow-md">
-                            <h4 class="text-lg font-bold"><?php echo ($book['title']); ?> </h4>
+                            <h4 class="text-lg font-bold">Book Title</h4>
                             <p class="text-sm text-gray-600">Borrowed on: <?php $borrow_date = date('y-m-d H-i-s'); ?></p>
                             <p class="text-sm text-gray-600">Due Date: <?php $return_date = date('y-m-d H-i-s', strtotime('+20 days')); ?></p>
                             <button class="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800">
                                 Return Book
-                            </button><?php } ?>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- javacsript that handles the functionality of the modal -->
+    
+    <script>
+    const modal = document.getElementById('borrowBookModal');
+    const closeModal = document.getElementById('closeModal');
+    const bookDetails = document.getElementById('modalBookDetails');
+    const borrowButtons = document.querySelectorAll('.borrow-book-button');
+
+    // Show the modal
+    borrowButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const bookTitle = button.getAttribute('data-title');
+            bookDetails.textContent = `You are about to borrow "${bookTitle}".`;
+            modal.classList.remove('hidden');
+        });
+    });
+
+    // Hide the modal
+    closeModal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+    });
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            modal.classList.add('hidden');
+        }
+    });
+</script>
 </body>
 
 </html>
