@@ -289,7 +289,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
         </div>
     </div>
 
-    <!-- Modal Script -->
+    <!-- create book Modal Script -->
     <script>
     // Get modal elements
     const modal = document.getElementById('modal');
@@ -316,7 +316,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
     </script>
 
     
-    <!-- javacsript that handles the functionality of the modal -->
+    <!-- javacsript that handles the functionality of borrow book modal -->
 
     <script>
     const modal = document.getElementById('borrowBookModal');
