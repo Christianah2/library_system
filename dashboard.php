@@ -108,7 +108,7 @@ if (!$books_result) {
                     <h3 class="text-xl font-semibold text-gray-900">Borrowed Books</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
                         <div class="bg-white p-4 rounded-md shadow-md">
-                            <h4 class="text-lg font-bold">Book Title </h4>
+                            <h4 class="text-lg font-bold"><?php echo ($book['title']); ?> </h4>
                             <p class="text-sm text-gray-600">Borrowed on: 2024-09-12</p>
                             <p class="text-sm text-gray-600">Due Date: 2024-10-12</p>
                             <button class="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800">
