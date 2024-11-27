@@ -148,8 +148,10 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                             <td class='py-2 px-4'>
 
                                 <!-- Ternary operator to display button if the book is available or not -->
-                                <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-700 borrow-book-button " data-title= "<?php echo ($book['title']); ?>">Borrow Book</button>'
-                                        : '<button class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700">Return Book</button>'; ?>
+                                <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-700 borrow-book-button " data-title= "<?php echo ($book["title"]); ?>">Borrow
+                                Book</button>'
+                                : '<button class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700">Return
+                                    Book</button>'; ?>
 
 
 
@@ -172,20 +174,21 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
             </div>
 
             <!-- borrow book Modal structure -->
-            <div id="borrowBookModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
-             <div class="bg-white p-6 rounded-md shadow-md w-1/3">
+            <div id="borrowBookModal"
+                class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
+                <div class="bg-white p-6 rounded-md shadow-md w-1/3">
                     <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
-                 <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
-                <div class="flex justify-end">
-                    <button id="closeModal" class="px-4 py-2 bg-red-600 rounded-md hover:bg-red-800 mr-2">
-                        Cancel
-                    </button>
-                    <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
-                         Confirm
+                    <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
+                    <div class="flex justify-end">
+                        <button id="closeModal" class="px-4 py-2 bg-red-600 rounded-md hover:bg-red-800 mr-2">
+                            Cancel
+                        </button>
+                        <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
+                            Confirm
 
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
             </div>
 
             <!-- create book Modal Structure -->
@@ -292,11 +295,23 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
     <!-- create book Modal Script -->
     <script>
     // Get modal elements
-    const modal = document.getElementById('modal');
+    const modals = document.querySelectorAll('.modal');
     const openModal = document.getElementById('openModal');
-    const closeModal = document.getElementById('closeModal');
+    const closeModal = document.querySelectorAll('closeModal');
+    const modal = document.getElementById('borrowBookModal');
+    const bookDetails = document.getElementById('modalBookDetails');
+    const borrowButtons = document.querySelectorAll('.borrow-book-button');
 
-    // Event listeners to open and close the modal
+    // Show borrow book modal
+    borrowButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const bookTitle = button.getAttribute('data-title');
+            bookDetails.textContent = `You are about to borrow "${bookTitle}".`;
+            modal.classList.remove('hidden');
+        });
+    });
+
+    // Event listeners to open and close the modals
     openModal.addEventListener('click', () => {
         modal.classList.remove('hidden');
         // Show the modal
@@ -307,7 +322,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
         // Hide the modal
     });
 
-    // Close modal when clicking outside the modal content
+    // Close modals when clicking outside the modal content
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.classList.add('hidden');
@@ -315,36 +330,6 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
     });
     </script>
 
-    
-    <!-- javacsript that handles the functionality of borrow book modal -->
-
-    <script>
-    const modal = document.getElementById('borrowBookModal');
-    const closeModal = document.getElementById('closeModal');
-    const bookDetails = document.getElementById('modalBookDetails');
-    const borrowButtons = document.querySelectorAll('.borrow-book-button');
-
-    // Show the modal
-    borrowButtons.forEach((button) => {
-        button.addEventListener('click', () => {
-            const bookTitle = button.getAttribute('data-title');
-            bookDetails.textContent = `You are about to borrow "${bookTitle}".`;
-            modal.classList.remove('hidden');
-        });
-    });
-
-    // Hide the modal
-    closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
-    });
-
-    // Close modal when clicking outside
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.classList.add('hidden');
-        }
-    });
-</script>
 </body>
 
 </html>
