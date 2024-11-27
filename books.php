@@ -180,23 +180,14 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                 class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
                 <div class="bg-white p-6 rounded-md shadow-md w-1/3">
                     <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
-<<<<<<< HEAD
                     <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
                     <div class="flex justify-end">
-                        <button id="closeModal" class="px-4 py-2 bg-red-600 rounded-md hover:bg-red-800 mr-2">
+                        <button id="closeModal"
+                            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800 mr-2">
                             Cancel
                         </button>
                         <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
                             Confirm
-=======
-                 <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
-                <div class="flex justify-end">
-                    <button id="closeModal" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800 mr-2">
-                        Cancel
-                    </button>
-                    <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
-                         Confirm
->>>>>>> 5d865a07c0fa82959c27e499b1ad6f18d17d4671
 
                         </button>
                     </div>
