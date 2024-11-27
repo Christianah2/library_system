@@ -149,7 +149,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
 
                                 <!-- Ternary operator to display button if the book is available or not -->
                                 <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded 
-                                hover:bg-green-700 borrow-book-button " data-title= "<?php echo ($data["title"]); ?>
+                                hover:bg-green-700 borrow-book-button " data-title= "<?php echo $data["title"]; ?>
                                 Borrow
                                 Book</button>'
                                 : '<button class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700">Return
