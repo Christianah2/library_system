@@ -109,7 +109,7 @@ if (!$books_result) {
                     <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
                  <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
                 <div class="flex justify-end">
-                    <button id="closeModal" class="px-4 py-2 bg-red-600 rounded-md hover:bg-red-800 mr-2">
+                    <button id="closeModal" class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800 mr-2">
                         Cancel
                     </button>
                     <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">

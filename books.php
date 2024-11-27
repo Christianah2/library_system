@@ -291,40 +291,15 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
 
     <!-- create book Modal Script -->
     <script>
-    // Get modal elements
-    const modal = document.getElementById('modal');
-    const openModal = document.getElementById('openModal');
-    const closeModal = document.getElementById('closeModal');
-
-    // Event listeners to open and close the modal
-    openModal.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        // Show the modal
-    });
-
-    closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        // Hide the modal
-    });
-
-    // Close modal when clicking outside the modal content
-    window.addEventListener('click', (event) => {
-        if (event.target === modal) {
-            modal.classList.add('hidden');
-        }
-    });
-    </script>
-
-    
-    <!-- javacsript that handles the functionality of borrow book modal -->
-
-    <script>
+    // Get all modal elements
+    const modals = document.querySelectorAll('.modal');
+    const openModal = document.querySelectorAll('openModal');
+    const closeModal = document.querySelectorAll('closeModal');
     const modal = document.getElementById('borrowBookModal');
-    const closeModal = document.getElementById('closeModal');
     const bookDetails = document.getElementById('modalBookDetails');
     const borrowButtons = document.querySelectorAll('.borrow-book-button');
 
-    // Show the modal
+    // Show borrow book modal
     borrowButtons.forEach((button) => {
         button.addEventListener('click', () => {
             const bookTitle = button.getAttribute('data-title');
@@ -333,18 +308,25 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
         });
     });
 
-    // Hide the modal
-    closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
+    // Event listeners to open and close the modals
+    openModal.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+        // Show the modals
     });
 
-    // Close modal when clicking outside
+    closeModal.addEventListener('click', () => {
+        modal.classList.add('hidden');
+        // Hide the modals
+    });
+
+    // Close modals when clicking outside the modal content
     window.addEventListener('click', (event) => {
         if (event.target === modal) {
             modal.classList.add('hidden');
         }
     });
-</script>
+    </script>
+    
 </body>
 
 </html>
