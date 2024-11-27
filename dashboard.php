@@ -110,8 +110,8 @@ if (!$books_result) {
                         <?php while ($book = mysqli_fetch_assoc ($books_result)){?>
                         <div class="bg-white p-4 rounded-md shadow-md">
                             <h4 class="text-lg font-bold"><?php echo ($book['title']); ?> </h4>
-                            <p class="text-sm text-gray-600">Borrowed on: 2024-09-12</p>
-                            <p class="text-sm text-gray-600">Due Date: 2024-10-12</p>
+                            <p class="text-sm text-gray-600">Borrowed on: <?php $borrow_date = date('y-m-d H-i-s'); ?></p>
+                            <p class="text-sm text-gray-600">Due Date: <?php $return_date = date('y-m-d H-i-s', strtotime('+20 days')); ?></p>
                             <button class="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800">
                                 Return Book
                             </button><?php } ?>
