@@ -148,15 +148,12 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                             <td class='py-2 px-4'>
 
                                 <!-- Ternary operator to display button if the book is available or not -->
-<<<<<<< HEAD
-                                <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-700 borrow-book-button " data-title= "<?php echo ($book["title"]); ?>">Borrow
+                                <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded 
+                                hover:bg-green-700 borrow-book-button " data-title= "<?php echo ($data["title"]); ?>
+                                Borrow
                                 Book</button>'
                                 : '<button class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700">Return
                                     Book</button>'; ?>
-=======
-                                <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded hover:bg-green-700 borrow-book-button " data-title= "<?php echo $data['title']; ?>">Borrow Book</button>'
-                                        : '<button class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700">Return Book</button>'; ?>
->>>>>>> 9d4182570715982bfc9a791f933b9140fc93110c
 
 
 
@@ -299,64 +296,40 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
 
     <!--Modal Script -->
     <script>
-<<<<<<< HEAD
-    // Get modal elements
-    const modals = document.querySelectorAll('.modal');
-    const openModal = document.getElementById('openModal');
-    const closeModal = document.querySelectorAll('closeModal');
-    const modal = document.getElementById('borrowBookModal');
-    const bookDetails = document.getElementById('modalBookDetails');
-    const borrowButtons = document.querySelectorAll('.borrow-book-button');
-=======
     // Get all modal elements
     const borrowModal = document.getElementById('borrowBookModal');
-const createModal = document.getElementById('modal');
->>>>>>> 9d4182570715982bfc9a791f933b9140fc93110c
+    const createModal = document.getElementById('modal');
 
-// Borrow book modal
-const bookDetails = document.getElementById('modalBookDetails');
-const borrowButtons = document.querySelectorAll('.borrow-book-button');
-borrowButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-        const bookTitle = button.getAttribute('data-title');
-        bookDetails.textContent = `You are about to borrow "${bookTitle}".`;
-        borrowModal.classList.remove('hidden');
-    });
-});
-
-<<<<<<< HEAD
-    // Event listeners to open and close the modals
-    openModal.addEventListener('click', () => {
-        modal.classList.remove('hidden');
-        // Show the modal
+    // Borrow book modal
+    const bookDetails = document.getElementById('modalBookDetails');
+    const borrowButtons = document.querySelectorAll('.borrow-book-button');
+    borrowButtons.forEach((button) => {
+        button.addEventListener('click', () => {
+            const bookTitle = button.getAttribute('data-title');
+            bookDetails.textContent = `You are about to borrow "${bookTitle}".`;
+            borrowModal.classList.remove('hidden');
+        });
     });
 
-    closeModal.addEventListener('click', () => {
-        modal.classList.add('hidden');
-        // Hide the modal
+    // Create book modal
+    const openCreateModal = document.getElementById('openModal');
+    const closeCreateModal = document.getElementById('closeModal');
+    openCreateModal.addEventListener('click', () => {
+        createModal.classList.remove('hidden');
     });
-=======
-// Create book modal
-const openCreateModal = document.getElementById('openModal');
-const closeCreateModal = document.getElementById('closeModal');
-openCreateModal.addEventListener('click', () => {
-    createModal.classList.remove('hidden');
-});
-closeCreateModal.addEventListener('click', () => {
-    createModal.classList.add('hidden');
-});
-
-// Close modal on outside click
-window.addEventListener('click', (event) => {
-    if (event.target === borrowModal) {
-        borrowModal.classList.add('hidden');
-    }
-    if (event.target === createModal) {
+    closeCreateModal.addEventListener('click', () => {
         createModal.classList.add('hidden');
-    }
-});
->>>>>>> 9d4182570715982bfc9a791f933b9140fc93110c
+    });
 
+    // Close modal on outside click
+    window.addEventListener('click', (event) => {
+        if (event.target === borrowModal) {
+            borrowModal.classList.add('hidden');
+        }
+        if (event.target === createModal) {
+            createModal.classList.add('hidden');
+        }
+    });
     </script>
 
 </body>
