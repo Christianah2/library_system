@@ -1,48 +1,48 @@
 <?php
 include 'connection.php';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $book_title = $_POST['book_title'];
-    $author_name = $_POST['author'];
-    $year_of_production = date('Y', strtotime($_POST['year_of_production']));
-    $age_barrier = $_POST['pg_rated'];
-    $no_of_pages = $_POST['number_of_pages'];
-    $book_type_id = $_POST['book_type_id'];
-    $genre_id = $_POST['genre_id'];
+if ( $_SERVER[ 'REQUEST_METHOD' ] == 'POST' ) {
+    $book_title = $_POST[ 'book_title' ];
+    $author_name = $_POST[ 'author' ];
+    $year_of_production = date( 'Y', strtotime( $_POST[ 'year_of_production' ] ) );
+    $age_barrier = $_POST[ 'pg_rated' ];
+    $no_of_pages = $_POST[ 'number_of_pages' ];
+    $book_type_id = $_POST[ 'book_type_id' ];
+    $genre_id = $_POST[ 'genre_id' ];
 
     // Check if the book already exists in the database
     $check_query = "SELECT * FROM books WHERE title = '$book_title'";
-    $verify_check_query = mysqli_query($conn, $check_query);
-    if (mysqli_num_rows($verify_check_query) > 0) {
+    $verify_check_query = mysqli_query( $conn, $check_query );
+    if ( mysqli_num_rows( $verify_check_query ) > 0 ) {
         echo "<script>alert('Book already exists')</script>";
         echo "<script>window.location.href='books.php'</script>";
         exit();
     }
     // Generate book ID
-    $book_id = substr(strtoupper($book_title), 0, 3) . mt_rand(0000, 9999);
+    $book_id = substr( strtoupper( $book_title ), 0, 3 ) . mt_rand( 0000, 9999 );
     $author_id = '';
     //Check if author exists before
-    $is_author_exist = mysqli_query($conn, "SELECT * FROM authors WHERE author_name = '$author_name'");
-    if (mysqli_num_rows($is_author_exist) > 0) {
-        $author_id = mysqli_fetch_array($is_author_exist)['author_id'];
+    $is_author_exist = mysqli_query( $conn, "SELECT * FROM authors WHERE author_name = '$author_name'" );
+    if ( mysqli_num_rows( $is_author_exist ) > 0 ) {
+        $author_id = mysqli_fetch_array( $is_author_exist )[ 'author_id' ];
     } else {
         // Generate author id
-        $author_id = substr(strtoupper($author_name), 0, 3) . mt_rand(0000, 9999);
+        $author_id = substr( strtoupper( $author_name ), 0, 3 ) . mt_rand( 0000, 9999 );
     }
 
     // Insert into the books table
     $sql_query = "INSERT INTO books (title, book_id, author_id, year_of_production, age_barrier, no_of_pages, book_type_id, genre_id) 
                   VALUES ('$book_title', '$book_id', '$author_id', '$year_of_production', '$age_barrier', '$no_of_pages', '$book_type_id', '$genre_id')";
-    $insert_result = mysqli_query($conn, $sql_query);
+    $insert_result = mysqli_query( $conn, $sql_query );
 
-    if ($insert_result === TRUE) {
+    if ( $insert_result === TRUE ) {
         //Update the No of books for the particular genre,
-        mysqli_query($conn, "UPDATE genres SET no_of_books = no_of_books + 1 WHERE genre_id = '$genre_id'");
-        mysqli_query($conn, "UPDATE book_types SET no_of_books = no_of_books + 1 WHERE book_type_id = '$book_type_id'");
-        if (mysqli_num_rows($is_author_exist) > 0) {
-            mysqli_query($conn, "UPDATE authors SET no_of_books = no_of_books + 1 WHERE author_id = '$author_id'");
+        mysqli_query( $conn, "UPDATE genres SET no_of_books = no_of_books + 1 WHERE genre_id = '$genre_id'" );
+        mysqli_query( $conn, "UPDATE book_types SET no_of_books = no_of_books + 1 WHERE book_type_id = '$book_type_id'" );
+        if ( mysqli_num_rows( $is_author_exist ) > 0 ) {
+            mysqli_query( $conn, "UPDATE authors SET no_of_books = no_of_books + 1 WHERE author_id = '$author_id'" );
         } else {
-            mysqli_query($conn, "INSERT INTO authors (author_name, author_id,no_of_books) VALUES ('$author_name', '$author_id','1')");
+            mysqli_query( $conn, "INSERT INTO authors (author_name, author_id,no_of_books) VALUES ('$author_name', '$author_id','1')" );
         }
         echo "<script>alert('Books Added Successfully')</script>";
         echo "<script>window.location.href='books.php'</script>";
@@ -63,13 +63,13 @@ $get_all_book_title_query = 'SELECT b.id, b.book_id,title,author_name,year_of_pr
                             USING (genre_id)
                             LEFT JOIN authors a
                             ON a.author_id = b.author_id ORDER BY id DESC';
-$get_all_book_title_result = mysqli_query($conn, $get_all_book_title_query);
-$book_title = mysqli_fetch_all($get_all_book_title_result, MYSQLI_ASSOC);
+$get_all_book_title_result = mysqli_query( $conn, $get_all_book_title_query );
+$book_title = mysqli_fetch_all( $get_all_book_title_result, MYSQLI_ASSOC );
 
 //Get all list of books categories
-$book_type_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM book_types ORDER BY id DESC'), MYSQLI_ASSOC);
-$book_genre_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM genres ORDER BY id DESC'), MYSQLI_ASSOC);
-$author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER BY id DESC'), MYSQLI_ASSOC);
+$book_type_list = mysqli_fetch_all( mysqli_query( $conn, 'SELECT * FROM book_types ORDER BY id DESC' ), MYSQLI_ASSOC );
+$book_genre_list = mysqli_fetch_all( mysqli_query( $conn, 'SELECT * FROM genres ORDER BY id DESC' ), MYSQLI_ASSOC );
+$author_list = mysqli_fetch_all( mysqli_query( $conn, 'SELECT * FROM authors ORDER BY id DESC' ), MYSQLI_ASSOC );
 ?>
 
 <!DOCTYPE html>
@@ -85,14 +85,16 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
         rel='stylesheet'>
     <script src='https://cdn.tailwindcss.com'></script>
     <script src='tailwindConfig.js'></script>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
 </head>
 
 <body class='min-h-screen bg-skyblue font-montserrat'>
     <div class='flex flex-col md:flex-row'>
         <!-- Sidebar -->
         <?php
-        include('sidebar.php');
-        ?>
+include( 'sidebar.php' );
+?>
         <!-- Main Content -->
         <div class='flex-1 px-5 py-8 bg-powderblue'>
             <div class='flex justify-between'>
@@ -121,47 +123,43 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                     </thead>
                     <tbody>
                         <?php $i = 1;
-                        foreach ($book_title as $data) {
-                        ?>
+foreach ( $book_title as $data ) {
+    ?>
                         <tr class='bg-white border-b hover:bg-gray-100'>
                             <td class='py-2 px-4'><?php echo $i++;
-                                                        ?> </td>
-                            <td class='py-2 px-4'><?php echo $data['title'];
-                                                        ?></td>
-                            <td class='py-2 px-4'><?php echo $data['author_name'];
-                                                        ?></td>
-                            <td class='py-2 px-4'><?php echo $data['year_of_production'];
-                                                        ?></td>
-                            <td class='py-2 px-4'><?php echo $data['no_of_pages'];
-                                                        ?></td>
-                            <td class='py-2 px-4'><?php echo $data['age_barrier'];
-                                                        ?></td>
-                            <td class='py-2 px-4'><?php echo $data['book_type_name'];
-                                                        ?></td>
-                            <td class='py-2 px-4'><?php echo $data['genre_name'];
-                                                        ?></td>
+    ?> </td>
+                            <td class='py-2 px-4'><?php echo $data[ 'title' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'author_name' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'year_of_production' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'no_of_pages' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'age_barrier' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'book_type_name' ];
+    ?></td>
+                            <td class='py-2 px-4'><?php echo $data[ 'genre_name' ];
+    ?></td>
 
                             <td class='py-2 px-4'>
-                                <?php echo ($data['status'] == '0') ? 'Available' : 'Borrowed' ?>
+                                <?php echo ( $data[ 'status' ] == '0' ) ? 'Available' : 'Borrowed' ?>
                             </td>
 
                             <td class='py-2 px-4'>
-
-                                <!-- Ternary operator to display button if the book is available or not -->
-                                <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded 
-                                hover:bg-green-700 borrow-book-button " book-title=" <?php echo $data["title"]; ?>
-                                Borrow
-                                Book</button>'
-                                : '<button class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700">Return
-                                    Book</button>'; ?>
-
-
-
+                                <?php echo ( $data[ 'status' ] == '0' )
+    ?
+    "<button class='px-2 py-1 bg-green-500 text-white rounded 
+                                hover:bg-green-700' data-bs-toggle='modal' data-bs-target='#staticBackdrop".$data[ 'book_id' ]."'>Borrow Book</button>"
+    :
+    "<button class='px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700' data-bs-target='#backdrop".$data[ 'book_id' ]."'>Return
+                                    Book</button>";
+    ?>
                                 <a href="edit_books.php?book_id=<?php echo $data['id'] ?>"> <button
                                         class='px-2 py-1 bg-cornflowerblue text-white rounded hover:bg-indigo-700'>
                                         Edit
                                     </button></a>
-
                                 <a
                                     href="delete.php?table_name=books&column_name=book_id&column_data=<?php echo $data['book_id'] ?>">
                                     <button class='px-2 py-1 bg-red-500 text-white rounded hover:bg-red-700'>
@@ -169,24 +167,77 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                                     </button></a>
                             </td>
                         </tr>
+                        <div class='modal fade' id="staticBackdrop<?php echo $data['book_id']?>"
+                            data-bs-backdrop='static' data-bs-keyboard='false' tabindex='-1'
+                            aria-labelledby='staticBackdropLabel' aria-hidden='true'>
+                            <div class='modal-dialog modal-lg'>
+                                <div class='modal-content'>
+                                    <div class='modal-header'>
+                                        <h5 class='modal-title' id='staticBackdropLabel'><?php echo $data[ 'title' ]?>
+                                        </h5>
+                                        <button type='button' class='btn-close' data-bs-dismiss='modal'
+                                            aria-label='Close'></button>
+                                    </div>
+                                    <form>
+                                        <div class='modal-body'>
+                                            <label for="">Student Name</label>
+                                            <input type='text'>
+
+                                        </div>
+                                        <div class='modal-footer'>
+                                            <button type='button' class='btn btn-secondary'
+                                                data-bs-dismiss='modal'>Close</button>
+                                            <button type='button' class='btn btn-primary'>Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='modal fade' id="backdrop<?php echo $data['book_id']?>" data-bs-backdrop='static'
+                            data-bs-keyboard='false' tabindex='-1' aria-labelledby='' aria-hidden='true'>
+                            <div class='modal-dialog modal-lg'>
+                                <div class='modal-content'>
+                                    <div class='modal-header'>
+                                        <h5 class='modal-title' id=''>
+                                            Return<?php echo $data[ 'title' ]?> back to library
+                                        </h5>
+                                        <button type='button' class='btn-close' data-bs-dismiss='modal'
+                                            aria-label='Close'></button>
+                                    </div>
+                                    <form>
+                                        <div class='modal-body'>
+                                            <label for="">Student Name</label>
+                                            <input type='text'>
+
+                                        </div>
+                                        <div class='modal-footer'>
+                                            <button type='button' class='btn btn-secondary'
+                                                data-bs-dismiss='modal'>Close</button>
+                                            <button type='button' class='btn btn-primary'>Save</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
                         <?php }
-                        ?>
+    ?>
                     </tbody>
                 </table>
             </div>
 
             <!-- borrow book Modal structure -->
-            <div id="borrowBookModal"
-                class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
-                <div class="bg-white p-6 rounded-md shadow-lg w-1/3">
-                    <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
-                    <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
-                    <div class="flex justify-end">
-                        <button id="closeModal-1"
-                            class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800 mr-2">
+            <div id='borrowBookModal'
+                class='hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center'>
+                <div class='bg-white p-6 rounded-md shadow-lg w-1/3'>
+                    <h2 class='text-xl font-bold mb-4'>Borrow Book</h2>
+                    <p class='text-md text-gray-900 mb-4' id='modalBookDetails'></p>
+                    <div class='flex justify-end'>
+                        <button id='closeModal-1'
+                            class='px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800 mr-2'>
                             Cancel
                         </button>
-                        <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
+                        <button class='px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue'>
                             Confirm
 
                         </button>
@@ -221,11 +272,11 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'
                                     required />
                                 <datalist id='options'>
-                                    <?php foreach ($author_list as $author_data) {
-                                    ?>
+                                    <?php foreach ( $author_list as $author_data ) {
+        ?>
                                     <option value='<?php echo $author_data['author_name'] ?>'>
                                         <?php }
-                                        ?>
+        ?>
                                 </datalist>
                             </div>
 
@@ -257,12 +308,12 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                                 <select name='book_type_id'
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
                                     <option value=''>...select</option>
-                                    <?php foreach ($book_type_list as $type_data) {
-                                    ?>
+                                    <?php foreach ( $book_type_list as $type_data ) {
+            ?>
                                     <option value='<?php echo $type_data['book_type_id'] ?>'>
-                                        <?php echo $type_data['book_type_name'] ?></option>
+                                        <?php echo $type_data[ 'book_type_name' ] ?></option>
                                     <?php }
-                                    ?>
+            ?>
                                 </select>
                             </div>
 
@@ -272,12 +323,12 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                                     class='w-full p-2 border border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-cornflowerblue'>
                                     <option value=''>...select</option>
                                     <?php
-                                    foreach ($book_genre_list as $genre_data) {
-                                    ?>
+            foreach ( $book_genre_list as $genre_data ) {
+                ?>
                                     <option value="<?php echo $genre_data['genre_id'] ?>">
-                                        <?php echo $genre_data['genre_name'] ?></option>
+                                        <?php echo $genre_data[ 'genre_name' ] ?></option>
                                     <?php }
-                                    ?>
+                ?>
                                 </select>
                             </div>
 
@@ -308,7 +359,9 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
     borrowButtons.forEach((button) => {
         button.addEventListener('click', () => {
             const bookTitle = button.getAttribute('book-title');
-            bookDetails.textContent = `You are about to borrow "${bookTitle}".`;
+            bookDetails.textContent = `You are about to borrow $ {
+                            bookTitle}
+                            .`;
             borrowModal.classList.remove('hidden');
         });
     });
@@ -333,7 +386,9 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
         }
     });
     </script>
-
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
+        integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM' crossorigin='anonymous'>
+    </script>
 </body>
 
 </html>

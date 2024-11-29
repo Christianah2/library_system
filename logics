@@ -1,0 +1,15 @@
+1. Check if the student age is correlated to the age barrier 
+2. ⁠Data to collect from student, emailaddress, firstname,lastname,date_of_birth 
+3. ⁠Check if the student date of birth is more or equal to age barrier 
+4. ⁠Store student data inside the student table , but you will need to check if email exist or not.
+5. ⁠If email address already exist, dont save, skip
+6. ⁠If email address doesnt not exist, save 
+7. ⁠Update the particular book to show its status as borrowed 
+8. ⁠Insert into the book log and set status as 1 since it is borrowed 
+
+Create another modal for returned book
+
+Update the book_logs table to take a column of status, 
+0 for returend 1 for borrowed. 
+
+Update sqlquery in your file so as for when i pull i can update
