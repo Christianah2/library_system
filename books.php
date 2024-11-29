@@ -171,7 +171,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                         </tr>
                         <?php }
                         ?>
-                    </tbody>s
+                    </tbody>
                 </table>
             </div>
 
@@ -182,7 +182,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                     <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
                     <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
                     <div class="flex justify-end">
-                        <button id="closeModal"
+                        <button id="closeModal-1"
                             class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800 mr-2">
                             Cancel
                         </button>
@@ -200,7 +200,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
                     <!-- Modal Header -->
                     <div class='p-4 border-b flex justify-between items-center bg-steelblue text-white rounded-t-lg'>
                         <h2 class='text-xl font-semibold'>Create Book</h2>
-                        <button id='closeModal' class='text-white hover:text-cornflowerblue text-2xl'>
+                        <button id='closeModal-2' class='text-white hover:text-cornflowerblue text-2xl'>
                             &times;
                         </button>
                     </div>
@@ -302,6 +302,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
     const createModal = document.getElementById('modal');
 
     // Borrow book modal
+    const closeBorrowModal = document.getElementById('closeModal-1');
     const bookDetails = document.getElementById('modalBookDetails');
     const borrowButtons = document.querySelectorAll('.borrow-book-button');
     borrowButtons.forEach((button) => {
@@ -314,7 +315,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
 
     // Create book modal
     const openCreateModal = document.getElementById('openModal');
-    const closeCreateModal = document.getElementById('closeModal');
+    const closeCreateModal = document.getElementById('closeModal-2');
     openCreateModal.addEventListener('click', () => {
         createModal.classList.remove('hidden');
     });

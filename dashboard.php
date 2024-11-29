@@ -76,7 +76,7 @@ if (!$books_result) {
                     </div>
                     <div class="bg-green-600 rounded-lg p-4 text-white">
                         <p class="text-lg">No of Available books</p>
-                        <p class="text-5xl font-semibold pt-6 "><?php echo $available_books?></p>
+                        <p class="text-5xl font-semibold pt-6 "><?php echo $available_books ?></p>
                     </div>
                     <div class="bg-red-600 rounded-lg p-4 text-white">
                         <p class="text-lg">No of Books Borrowed</p>
@@ -96,7 +96,9 @@ if (!$books_result) {
                         <p class="text-sm text-gray-600">Author: <?php echo ($book['author_name']); ?></p>
                         <p class="text-sm text-gray-600">Type: <?php echo ($book['book_type_name']); ?></p>
                         <p class="text-sm text-gray-600">Genre: <?php echo ($book['genre_name']); ?></p>
-                        <button class="mt-4 px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue borrow-book-button " data-title= "<?php echo ($book['title']); ?>">
+                        <button
+                            class="mt-4 px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue borrow-book-button "
+                            data-title="<?php echo ($book['title']); ?>">
                             Borrow Book
                         </button>
                     </div>
@@ -104,32 +106,36 @@ if (!$books_result) {
                 </div>
 
                 <!-- borrow book Modal structure -->
-            <div id="borrowBookModal" class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
-             <div class="bg-white p-6 rounded-md shadow-md w-1/3">
-                    <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
-                 <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
-                <div class="flex justify-end">
-                    <button id="closeModal" class="px-4 py-2 bg-red-600 rounded-md hover:bg-red-800 mr-2">
-                        Cancel
-                    </button>
-                    <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
-                         Confirm
+                <div id="borrowBookModal"
+                    class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
+                    <div class="bg-white p-6 rounded-md shadow-md w-1/3">
+                        <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
+                        <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
+                        <div class="flex justify-end">
+                            <button id="closeModal"
+                                class="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800 mr-2">
+                                Cancel
+                            </button>
+                            <button class="px-4 py-2 bg-steelblue text-white rounded-md hover:bg-cornflowerblue">
+                                Confirm
 
-                    </button>
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            </div>
 
 
                 <!-- Borrowed Books Section -->
                 <div class="mt-8">
                     <h3 class="text-xl font-semibold text-gray-900">Borrowed Books</h3>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
-                         
+
                         <div class="bg-white p-4 rounded-md shadow-md">
                             <h4 class="text-lg font-bold">Book Title</h4>
-                            <p class="text-sm text-gray-600">Borrowed on: <?php $borrow_date = date('y-m-d H-i-s'); ?></p>
-                            <p class="text-sm text-gray-600">Due Date: <?php $return_date = date('y-m-d H-i-s', strtotime('+20 days')); ?></p>
+                            <p class="text-sm text-gray-600">Borrowed on: <?php $borrow_date = date('y-m-d H-i-s'); ?>
+                            </p>
+                            <p class="text-sm text-gray-600">Due Date:
+                                <?php $return_date = date('y-m-d H-i-s', strtotime('+20 days')); ?></p>
                             <button class="mt-4 px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-800">
                                 Return Book
                             </button>
@@ -168,7 +174,7 @@ if (!$books_result) {
             modal.classList.add('hidden');
         }
     });
-</script>
+    </script>
 </body>
 
 </html>
