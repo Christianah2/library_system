@@ -149,7 +149,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
 
                                 <!-- Ternary operator to display button if the book is available or not -->
                                 <?php echo ($data['status'] == '0') ? '<button class="px-2 py-1 bg-green-500 text-white rounded 
-                                hover:bg-green-700 borrow-book-button " data-title= "<?php echo $data["title"]; ?>
+                                hover:bg-green-700 borrow-book-button " book-title=" <?php echo $data["title"]; ?>
                                 Borrow
                                 Book</button>'
                                 : '<button class="px-2 py-1 bg-yellow-500 text-white rounded hover:bg-yellow-700">Return
@@ -178,7 +178,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
             <!-- borrow book Modal structure -->
             <div id="borrowBookModal"
                 class="hidden fixed inset-0 bg-gray-600 bg-opacity-75 flex items-center justify-center">
-                <div class="bg-white p-6 rounded-md shadow-md w-1/3">
+                <div class="bg-white p-6 rounded-md shadow-lg w-1/3">
                     <h2 class="text-xl font-bold mb-4">Borrow Book</h2>
                     <p class="text-md text-gray-900 mb-4" id="modalBookDetails"></p>
                     <div class="flex justify-end">
@@ -307,7 +307,7 @@ $author_list = mysqli_fetch_all(mysqli_query($conn, 'SELECT * FROM authors ORDER
     const borrowButtons = document.querySelectorAll('.borrow-book-button');
     borrowButtons.forEach((button) => {
         button.addEventListener('click', () => {
-            const bookTitle = button.getAttribute('data-title');
+            const bookTitle = button.getAttribute('book-title');
             bookDetails.textContent = `You are about to borrow "${bookTitle}".`;
             borrowModal.classList.remove('hidden');
         });
